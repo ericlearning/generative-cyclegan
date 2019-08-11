@@ -134,6 +134,8 @@ def lab_to_rgb(img):
 def get_sample_images_list(mode, inputs):
 	if(mode == 'Cyclegan'):
 		val_data, netG_A2B, netG_B2A, device = inputs[0], inputs[1], inputs[2], inputs[3]
+		netG_A2B.eval()
+		netG_B2A.eval()
 		with torch.no_grad():
 			A = val_data[0].to(device)
 			B = val_data[1].to(device)
@@ -177,5 +179,8 @@ def get_sample_images_list(mode, inputs):
 			sample_images_list.extend(sample_B2A_images_list)
 			sample_images_list.extend(sample_A_Reconstruction_images_list)
 			sample_images_list.extend(sample_B_Reconstruction_images_list)
+
+		netG_A2B.train()
+		netG_B2A.train()
 
 	return sample_images_list
